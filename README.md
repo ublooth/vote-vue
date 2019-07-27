@@ -57,11 +57,11 @@
 
 Html文件 放在 views 目录
 
-js 放在 public/javascripts
+js 放在 public/javascripts           /javascripts/js名称
 
-css 放在 public/stylesheets
+css 放在 public/stylesheets        /stylesheets/js名称
 
-图片 放在 public/images
+图片 放在 public/images             /images/图片名称
 
 
 
@@ -72,6 +72,12 @@ css 放在 public/stylesheets
 注册页面取 register.html
 
 搜索页面取 search.html
+
+
+
+
+
+
 
 
 
