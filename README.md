@@ -53,6 +53,28 @@
 ```
 执行完`npm run start`命令后，打开浏览器 `http://localhost:8080/vote/index`访问首页地址
 
+# 项目规则
+
+Html文件 放在 views 目录
+
+js 放在 public/javascripts
+
+css 放在 public/stylesheets
+
+图片 放在 public/images
+
+
+
+首页名称取 index.html
+
+规则页面取 rule.html
+
+注册页面取 register.html
+
+搜索页面取 search.html
+
+
+
 
 ## 项目说明
 
