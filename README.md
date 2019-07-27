@@ -57,11 +57,11 @@
 
 Html文件 放在 views 目录
 
-js 放在 public/javascripts           /javascripts/js名称
+js 放在 public/javascripts     如何引用：   /javascripts/js名称
 
-css 放在 public/stylesheets        /stylesheets/js名称
+css 放在 public/stylesheets    如何引用：      /stylesheets/css名称
 
-图片 放在 public/images             /images/图片名称
+图片 放在 public/images         如何引用：      /images/图片名称
 
 
 
