@@ -1,9 +1,11 @@
 $(document).ready(function() {
+    
     // console.log(123);
     function userList(){
         $.ajax({
             type:"get",
-            url:"/vote/index/data?limit=10&offset=0",
+            // url:"/vote/index/data?limit=10&offset=0",
+            url:"/vote/index/data?limit=20&offset=0",
             data: "",
             success: function (response) {
                 response = JSON.parse(response);
@@ -63,4 +65,16 @@ $(document).ready(function() {
         });
     }
     userList();
+
+
+
+
+    $('.left').click(function(){
+        $('.deng').css('display','block');
+        $('.zxs').css('display','block');
+    });
+    $('.deng').click(function(){
+        $('.deng').css('display','none');
+        $('.zxs').css('display','none');
+    });
 });

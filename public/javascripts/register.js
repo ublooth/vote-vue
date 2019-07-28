@@ -95,18 +95,29 @@ $(document).ready(function() {
                 success:function(response) {
                     response = JSON.parse(response);
                     if (response.errno === 0) {
+
                         response.push(
+                                // 错误
+
                             {
-                                username:{user},
-                                mobile: {ph},
-                                descrption: {desc},
-                                gender: {head},
-                                password: {pass}
+                                username:$('#userName').val(),
+                                mobile: $('#phone').val(),
+                                descrption: $("#describe").val(),
+                                gender: {function(){
+                                    var sex = $("input[name='sex']:checked").val();
+                                    if(sex == 0){
+                                        return 'boy';
+                                    } else {
+                                        return 'girl';
+                                    }
+                                }},
+                                password: $('#userPwd').val()
                             }
                         );
                     }
                 }
             });
+            return false;
         });
 
 });
