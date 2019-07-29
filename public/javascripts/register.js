@@ -22,24 +22,11 @@ $(document).ready(function() {
                 alert("手机号码格式错误");
                 return false;
             }
-        });
-        $("#describe").blur(function(){
-            var desc = String($("#describe").val());//描述
-            if(desc.length > 20){
-                alert("自我描述字数为20字以内");
-                return false;
-            }
-        });  
-         
+        }); 
+
+         //submit事件将会在表单提交时触发
         $('.myform').submit(function(){
-            var sex = $("input[name='sex']:checked").val();
-            var head = "";
-            if(sex == 0){
-                head = 'boy';
-            } else {
-                head = 'girl';
-            }
-            console.log('head',head);
+            var sex = $("input[name='sex']:checked").val();//性别
             var user = $('#userName').val();//用户名
             var pass = $('#userPwd').val();//密码
             var passTwo = $('#userPwd2').val();//确认密码
@@ -81,62 +68,28 @@ $(document).ready(function() {
                 alert("请填写自我描述（20字以内）");
                 return false;
             }
-            if(desc.length > 20){
-                alert("自我描述字数为20字以内");
-                return false;
-            }
-            // return false;
+            
             $.ajax({
                 type:"post",
                 url: "/vote/register/data",
-                processData:false,//取消参数解析
-                contentType: false, //取消类型设置，post提交的类型
-                data:"",//规定要发送到服务器的数据
+                data: {
+                    username: user,
+                    mobile: ph,
+                    descrption: desc,
+                    gender: sex === '0' ? 'boy' : 'girl',
+                    password: pass
+                },//规定要发送到服务器的数据
                 success:function(response) {
                     response = JSON.parse(response);
                     if (response.errno === 0) {
-
-                        response.push(
-                                // 错误
-
-                            {
-                                username:$('#userName').val(),
-                                mobile: $('#phone').val(),
-                                descrption: $("#describe").val(),
-                                gender: {function(){
-                                    var sex = $("input[name='sex']:checked").val();
-                                    if(sex == 0){
-                                        return 'boy';
-                                    } else {
-                                        return 'girl';
-                                    }
-                                }},
-                                password: $('#userPwd').val()
-                            }
-                        );
+                        alert(response.msg);
+                        location.href = '/vote/index';
+                        // window.open('/vote/index');
+                    }else{
+                        alert('报名失败');
                     }
                 }
             });
-            return false;
         });
 
 });
-// var formData = new FormData($("#myform")[0]);
-// formData.append("username",user);
-// formData.append("mobile",ph);
-// formData.append("descrption",desc);
-// formData.append("gender",head);
-// formData.append("password",pass);
-//     $.ajax({
-//         type:"post",
-//         url: "/vote/register/data",
-//         processData:false,//取消参数解析
-//         contentType: false, //取消类型设置，post提交的类型
-//         data:formData,//规定要发送到服务器的数据
-//         success:function(response) {
-//             response = JSON.parse(response);
-//             if (response.errno != 0) {
-//                 alert('获取用户数据错了');
-//             }
-//         }
-//     });

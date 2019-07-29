@@ -240,7 +240,7 @@ body {
     margin: 10px 0 0 0;
 
 }
-.den input[type="submit"] {
+.den input[id="submit"] {
     height: 26px;
     background: #42a2e6;
     color: #fff;
@@ -250,9 +250,13 @@ body {
     border: none;
     border-radius: 15px;
     margin: 10px 0 5px;
+    text-align: center;
 }
 .den a {
     font-size: 14px;
     color: #ff8b62;
     text-decoration: underline;
+}
+input {
+    outline:none;
 }

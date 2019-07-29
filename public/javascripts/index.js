@@ -18,14 +18,14 @@ $(document).ready(function() {
                         html +=
                         `<div class="user">
                                 <div class="headpor">
-                                    <a href=""><img src="${item.head_icon}"></a>
+                                    <a href="javascript:"><img src="${item.head_icon}"></a>
                                 </div>
                                 <div class="ticket">
                                     <p>${item.vote}票</p>
                                     <input type="button" value="投TA一票">
                                 </div>
                                 <div class="name">
-                                    <a href="">
+                                    <a href="javascript:">
                                         <span class="fef">${item.username}</span>
                                         <span class="thaa" style="margin: 0 6px;">|</span>
                                         <span class="thaa">编号#${item.id}</span>
@@ -66,9 +66,7 @@ $(document).ready(function() {
     }
     userList();
 
-
-
-
+//登入页显示隐藏
     $('.left').click(function(){
         $('.deng').css('display','block');
         $('.zxs').css('display','block');
@@ -77,4 +75,29 @@ $(document).ready(function() {
         $('.deng').css('display','none');
         $('.zxs').css('display','none');
     });
+
+    // 登入
+    $('#submit').click(function(){
+        var num = $('#num').val();
+        var pwd = $('#pwd').val();
+        $.ajax({
+            type: "POST",
+            url: "/vote/index/info",
+            data: {
+                password: pwd,
+                id: num
+            },
+            success:function(response){
+                response = JSON.parse(response);
+                if (response.errno === 0) {
+                    alert('登入成功');
+                    $(".den")[0].reset();
+                    location.href = '/vote/index';
+                } else {
+                    alert('用户编号或密码错误！')
+                }
+            }
+        });
+    });
+
 });
