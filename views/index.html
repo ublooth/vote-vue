@@ -17,7 +17,7 @@
         <div class="head-img">
             <img src="/images/title.png" class="animated tada">
             <div class="sign">
-                <a href="http://localhost:8080/vote/register">我要报名</a>
+                <a href="http://localhost:8080/vote/register" id="my">我要报名</a>
             </div>
         </div>
         <div class="please">
@@ -91,10 +91,23 @@
             <span class="f-s">没有用户名和编号？</span>  
             <a href="http://localhost:8080/vote/register">请先进行报名</a>
         </form>  
+        <div class="welcome den">
+            <div style="font-size:30px;color:red;padding:10px 0;">Welcome</div>
+            <div id="kaka" style="font-size:30px;color:red;margin: 10px 0;">卡卡西</div>
+            <div id="signOut" >退出登入</div>
+        </div>
     </div>
     
     
 </body>
     <script src="/javascripts/jquery-3.3.1.js"></script>
     <script src="/javascripts/index.js"></script>
+    <script>
+    //     console.log('33',$("#signOut"))
+    // $("#signOut").click(function(){
+    //     window.localStorage.clear();
+    //     console.log(3333)
+    // });
+
+    </script>
 </html>

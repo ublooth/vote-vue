@@ -260,3 +260,17 @@ body {
 input {
     outline:none;
 }
+
+.welcome {
+    display: none;
+}
+#signOut{
+    font-size: 14px;
+    color: white;
+    height: 25px;
+    width: 30%;
+    line-height: 25px;
+    background: #03A9F4;
+    border-radius: 10px;
+    margin: 25px auto 0;
+}

@@ -92,12 +92,54 @@ $(document).ready(function() {
                 if (response.errno === 0) {
                     alert('登入成功');
                     $(".den")[0].reset();
-                    location.href = '/vote/index';
+                    $('.deng').css('display','none');
+                    $('.zxs').css('display','none');
+
+                    // js本地存储：localStorage
+                    var id = num;
+                    localStorage.setItem("temp", id);
+                    // console.log(localStorage.getItem("temp"));
+                    //本地存储id的值
+                    var ida = localStorage.getItem("temp");
+                    var objects = response;
+                    if (ida == objects.user.id) {
+                        // alert('welcome' + objects.user.username);
+                        $(".den").css('display','none');
+                        $(".welcome").css('display','block');
+                        $("#kaka").html(objects.user.username);
+                        $("#my").html('个人主页');
+                        $("#my").attr('href','http://localhost:8080/vote/detail')
+
+                        
+                    } 
+                    // console.log('lobjects',objects);
+                    // console.log('user',objects.user);
+                    // console.log('username',objects.user.username);
+                    
+                    
                 } else {
                     alert('用户编号或密码错误！')
                 }
+               
+               
+
             }
         });
+        // js本地存储：localStorage
+        // var arr = [1, 2, 3];
+        // localStorage.setItem("temp", arr); //存入 参数： 1.调用的值 2.所要存入的数据 
+        // console.log(localStorage.getItem("temp"));//输出
+        // JSON对象转JSON字符串
+        // var obj = { "a": 1, "b": 2 };
+        // obj = JSON.stringify(obj); //转化为JSON字符串
+        // localStorage.setItem("temp2", obj);
+        // //JSON字符串转JSON对象
+        // obj = JSON.parse(localStorage.getItem("temp2"));
+    });
+    //退出登入
+    $("#signOut").click(function(){
+        window.localStorage.clear();
+        location.href = '/vote/index';
     });
 
 });
