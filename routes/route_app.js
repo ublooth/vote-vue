@@ -106,6 +106,11 @@ exports.register_data = (req, res) => {
     registerData.vote_times = 0;
     registerData.vfriend = [];
     database.data.objects.push(registerData);
+    // for(var i = 20; i < 120; i++) {
+    //     registerData.id = i + 11
+    //     database.data.total++;
+    //     database.data.objects.push(registerData)
+    // }
     dealFn.writeFileData('database.json', database).then((msg) => {
         console.log(msg);
     }, (msg) => {

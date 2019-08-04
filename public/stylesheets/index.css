@@ -202,3 +202,9 @@ body {
     margin-top: 10px;
     box-shadow: 0px 3px 3px rgba(156, 211, 255, 0.98)
 }
+
+.loading {
+    font-size: 12px;
+    text-align: center;
+    margin: 10px 0;
+}
