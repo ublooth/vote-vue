@@ -24,8 +24,9 @@ $(document).ready(function() {
             }
         }); 
 
-         //submit事件将会在表单提交时触发
-        $('.myform').submit(function(){
+         
+        $('.sub').click(function(e){
+            e.preventDefault();
             var sex = $("input[name='sex']:checked").val();//性别
             var user = $('#userName').val();//用户名
             var pass = $('#userPwd').val();//密码
@@ -81,7 +82,12 @@ $(document).ready(function() {
                 },//规定要发送到服务器的数据
                 success:function(response) {
                     response = JSON.parse(response);
+                    console.log('response',response)
+                    var pass = $('#userPwd').val();//密码
+                    console.log('user',pass)
                     if (response.errno === 0) {
+                        localStorage.setItem("id",response.id);//用户编号
+                        localStorage.setItem("pwd",pass);//密码
                         alert(response.msg);
                         location.href = '/vote/index';
                         // window.open('/vote/index');

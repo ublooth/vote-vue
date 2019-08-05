@@ -1,21 +1,22 @@
-
 $(document).ready(function() {
 
-    var pathname = location.pathname
-
+	var pathname = location.pathname
+	var total = 100 // 列表总数
+	var flag = false
     /* 首页 */
     // 获取用户列表数据
-    function getUserList() {
+    function getUserList(offset) {
         $.ajax({
             type: "get",
-            url: "/vote/index/data?limit=10&offset=0",
+            url: "/vote/index/data?limit=10&offset=" + offset,
             data: "",
             success: function (response) {
                 response = JSON.parse(response)
                 console.log('response', response)
                 if (response.errno === 0) {
                     var html = ''
-                    var objects = response.data.objects
+					var objects = response.data.objects
+					total = response.data.total
                     for(var i = 0; i < objects.length; i++) {
                         var user = objects[i]
                         html = html + 
@@ -37,7 +38,8 @@ $(document).ready(function() {
                                 </div>
                             </div>`
                     }
-                    $('.list').html(html)
+					$('.list').append(html)
+					flag = false
                 } else {
                     alert('获取用户数据错了')
                 }
@@ -47,7 +49,24 @@ $(document).ready(function() {
 
     // 首页初始化
     function homeInit() {
-        getUserList()
+		var offset = 0
+		var limit = 10
+		getUserList(offset)
+		$(window).scroll(function () {
+			if ($(window).height() + $(window).scrollTop() === $(document).height()) {
+				if (flag === false) {
+					flag = true
+					setTimeout(function() {
+						offset = offset + limit
+						if (offset > total) {
+							$('.loading').html('全部加载完成～')
+						} else {
+							getUserList(offset)
+						}
+					}, 1000)
+				}
+			}
+		});
     }
 
 

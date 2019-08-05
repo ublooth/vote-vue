@@ -13,26 +13,26 @@
 <body>
     <div class="head">
         <div class="left"><span class="f-s14">用户登入</span></div>
-        <div class="right"><a href="./rule.html" class="f-s14">活动规则</a></div>
+        <div class="right"><a href="/vote/rule" class="f-s14">活动规则</a></div>
         <div class="head-img">
             <img src="/images/title.png" class="animated tada">
             <div class="sign">
                 <a href="http://localhost:8080/vote/register" id="my">我要报名</a>
             </div>
         </div>
-        <div class="please">
-            <input type="text" placeholder="请输入用户名称或编号">
-            <a href="">搜索</a>
-        </div>
+        <form class="please">
+            <input class="text" type="text" placeholder="请输入用户名称或编号">
+            <input class="button" type="button" value="搜索">搜索
+        </form>
     </div>
     <div class="list">
-        <div class="user">
+        <!-- <div class="user">
             <div class="headpor">
                 <a href=""><img src="/images/boy.png"></a>
             </div>
             <div class="ticket">
                 <p>5票</p>
-                <input type="button" value="投TA一票">
+                <div class="but">投TA一票</div>
             </div>
             <div class="name">
                 <a href="">
@@ -42,51 +42,16 @@
                     <p>hellohellohellohellohellohellohellohellohellohellohellohellohello</p>
                 </a>
             </div>
-        </div>
-        <div class="user">
-            <div class="headpor">
-                <a href=""><img src="/images/boy.png"></a>
-            </div>
-            <div class="ticket">
-                <p>5票</p>
-                <input type="button" value="投TA一票">
-            </div>
-            <div class="name">
-                <a href="">
-                    <span class="fef">鸣人</span>
-                    <span class="thaa" style="margin: 0 6px;">|</span>
-                    <span class="thaa">编号#1</span>
-                    <p>说到做到，这就是我的忍道.说到做到，这就是我的忍道</p>
-                </a>
-            </div>
-        </div>
-        <div class="user">
-            <div class="headpor">
-                <a href="">
-                    <img src="/images/girl.png">
-                </a>
-            </div>
-            <div class="ticket">
-                <p>5票</p>
-                <input type="button" value="投TA一票">
-            </div>
-            <div class="name">
-                <a href="">
-                    <span class="fef">canfoo</span>
-                    <span class="thaa" style="margin: 0 6px;">|</span>
-                    <span class="thaa">编号#13</span>
-                    <p>想要的就去追求，别废话！</p>
-                </a>
-            </div>
-        </div>
-      
+        </div> -->
     </div>
+    <div class="top">加载更多...</div>
+
     <div class="deng"></div>
     <div class="zxs">
-        <form class="den">
+        <form class="den" id="myform">
             <p>请输入用户信息进行验证</p>
             <input id="num" type="text" placeholder="请填写用户编号"><br>
-            <input id="pwd" type="text" placeholder="请填写用户密码"><br>
+            <input id="pwd" type="password" placeholder="请填写用户密码"><br>
             <input type="button" id="submit" value="提交"><br>
             <span class="f-s">没有用户名和编号？</span>  
             <a href="http://localhost:8080/vote/register">请先进行报名</a>

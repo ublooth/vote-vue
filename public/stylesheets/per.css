@@ -60,7 +60,7 @@ body {
 /* 头部 */
 .headImg {
     width: 100%;    
-    height: 172px;
+    height: 202px;
     background: url(../images/bgone.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -105,6 +105,10 @@ body {
     font-size: 18px;
     color: #fff57f;
     margin-top: 5px;
+}
+.autograph p {
+    width: 80%;
+    margin: 0 auto;
 }
 .sign {
     text-align: center;

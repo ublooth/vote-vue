@@ -105,7 +105,7 @@ body {
     width: 80%;
     margin:15px auto 0;
 }
-.please input {
+.please .text {
     vertical-align: top;
     width: 85%;
     height: 35px;
@@ -117,7 +117,7 @@ body {
     font-size: 14px;
     outline: none;
 }
-.please a {
+.please .button {
     color: #fff;
     text-align: center;
     line-height: 35px;
@@ -125,6 +125,7 @@ body {
     display: inline-block;
     width: 15%;
     height: 35px;
+    border: none;
     border-bottom-right-radius: 17.5px;
     border-top-right-radius: 17.5px;
     background:  #42a2e6;
@@ -159,6 +160,7 @@ body {
     vertical-align: middle; */
     margin: 0px 0 0 70px;
     padding: 18px 0 0 0;
+    cursor: pointer;
 }
 .name span {
     font-size: 14px;
@@ -190,13 +192,13 @@ body {
     font-size: 14px;
     color: #ff7c50;
 }
-.ticket input {
+.ticket div {
     width: 75px;
     height: 24px;
     line-height: 24px;
     text-align: center;
     background: #52aaef;
-    border: none;
+    font-size: 12px;
     border-radius: 12px;
     color: #fff;
     margin-top: 10px;
@@ -231,7 +233,8 @@ body {
     font-size: 18px;
     padding-top: 5px;
 }
-.den input[type="text"] {
+.den input[type="text"],
+.den input[type="password"] {
     border: #52aaef 1px solid;
     height: 26px;
     width: 75%;
@@ -273,4 +276,8 @@ input {
     background: #03A9F4;
     border-radius: 10px;
     margin: 25px auto 0;
+}
+.top {
+    font-size: 16px;
+    text-align: center;
 }
