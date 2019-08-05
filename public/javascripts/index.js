@@ -20,7 +20,7 @@ $(document).ready(function() {
                     var pwds = pwd;
                     localStorage.setItem("id",id);//存入用户编号
                     localStorage.setItem("pwd",pwds);//存入密码
-                    alert(response.msg);
+                    // alert(response.msg);
                     $('.deng').css('display', 'none');
                     $('.zxs').css('display', 'none');
                     $(".den").css('display', 'none');
@@ -83,7 +83,9 @@ $(document).ready(function() {
 //首页用户列表
     var total = 0; // 列表总数
 	var flag = false;//设置开关
-    function userList(offset){
+    function userList(offset,i){
+        // console.log("iiii",i);
+        var j = i;
         $.ajax({
             type:"get",
             url:"/vote/index/data?limit=10&offset=" + offset,
@@ -91,12 +93,12 @@ $(document).ready(function() {
             data: "",
             success: function (response) {
                 response = JSON.parse(response);
-                console.log('12',response);
+                // console.log('12',response);
                 if (response.errno === 0) {
                     var html = '';
                     var objects = response.data.objects;
                     total = response.data.total;
-                    console.log('列表总数',total);
+                    // console.log('列表总数',total);
                     console.log('objects:',objects);
                     objects.forEach(function(item) {
                         html +=
@@ -116,99 +118,85 @@ $(document).ready(function() {
                                         <p>${item.descrption}</p>
                                     </a>
                                 </div>
-                            </div>`
+                            </div>
+                            `;
+                        
                     });
-                    // for(var i = 0; i < objects.length; i++) {
-                    //     var user = objects[i];
-                    //     console.log('33',user);
-                    //     html +=
-                    //     `<div class="user">
-                    //             <div class="headpor">
-                    //                 <a href=""><img src="${user.head_icon}"></a>
-                    //             </div>
-                    //             <div class="ticket">
-                    //                 <p>${user.vote}票</p>
-                    //                 <input type="button" value="投TA一票">
-                    //             </div>
-                    //             <div class="name">
-                    //                 <a href="">
-                    //                     <span class="fef">${user.username}</span>
-                    //                     <span class="thaa" style="margin: 0 6px;">|</span>
-                    //                     <span class="thaa">编号#${user.id}</span>
-                    //                     <p>${user.descrption}</p>
-                    //                 </a>
-                    //             </div>
-                    //         </div>`
-                    // }
+
                     $('.list').append(html);
                     flag = false;//开关
                 } else {
                     alert('获取用户数据错了');
                 }
-                // console.log('response', response);
-
-                // 首页投票请求
-                $(".but").click(function(){
-                    //当前点击的索引
-                    var thisIndex = $(".but").index($(this));
-                    //获取编号，被投票者id
-                    var isId = $(".taa").eq(thisIndex).html().split('#')[1];
-                    //获取本地存储的投票者id
-                    var idpost = localStorage.getItem("id");
-                    if(!idpost){
+                console.log('$(".but")',$(".but"))
+                console.log("jjj",j)
+                var z = j; 
+                for (var z = j;z < $(".but").length; z++){
+                    $(".but").eq(z).click(function(){
+                        //当前点击的索引
+                        var thisIndex = $(".but").index($(this));
+                        //获取编号，被投票者id
+                        var isId = $(".taa").eq(thisIndex).html().split('#')[1];
+                        //     //获取本地存储的投票者id
+                        var idpost = localStorage.getItem("id");
+                        if(!idpost){
                         // alert('请先登录账号');
-                        $('.deng').css('display', 'block');
-                        $('.zxs').css('display', 'block');
-                        return;
-                    }
-                    $.ajax({
-                        type: 'GET',
-                        url: '/vote/index/poll?id=' + isId + '&voterId=' + idpost,
-                        success: function(data){
-                            data = JSON.parse(data);
-                            // 获取被投票者当前的票数
-                            var isNum = Number($(".ticket p").eq(thisIndex).html().split('')[0]);
-                            if(data.errno === 0){
-                                isNum = isNum + 1;
-                                // alert(data.msg);
-                                $(".ticket p").eq(thisIndex).html(isNum + '票');
-                                $(".ticket p").eq(thisIndex).addClass("animated tada");
-                            } else {
-                                alert(data.msg);
-
-                            }
-                            
-                        },
-                        // 返回数据：errno为0，数据正确	
+                            $('.deng').css('display', 'block');
+                            $('.zxs').css('display', 'block');
+                            return;
+                        }
+                        $.ajax({
+                            type: 'GET',
+                            url: '/vote/index/poll?id=' + isId + '&voterId=' + idpost,
+                            success: function(data){
+                                data = JSON.parse(data);
+                                // 获取被投票者当前的票数
+                                var isNum = Number($(".ticket p").eq(thisIndex).html().split('')[0]);
+                                if(data.errno === 0){
+                                    isNum = isNum + 1;
+                                    // alert(data.msg);
+                                    $(".ticket p").eq(thisIndex).html(isNum + '票');
+                                    $(".ticket p").eq(thisIndex).addClass("animated tada");
+                                } else {
+                                    alert(data.msg);
+                                }
+                            },
+                            // 返回数据：errno为0，数据正确	
+                        });
                     });
-                });
+                }
                 $(".name").click(function(){
-                    console.log('name')
                     //当前点击的索引
                     var thisIndex = $(".name").index($(this));
                     //获取编号，被投票者id
                     var isId = $(".taa").eq(thisIndex).html().split('#')[1];
-                    console.log('thisIndex',thisIndex)
-                    console.log('isId',isId)
                     location.href="/vote/detail/"+isId
+                });
+                $(".headpor").click(function(){
+                    //当前点击的索引
+                    var thdex = $(".headpor").index($(this));
+                    //获取编号，被投票者id
+                    var isaId = $(".taa").eq(thdex).html().split('#')[1];
+                    location.href="/vote/detail/"+isaId
                 });
             }
             
         });
+        
     }
     // 首页初始化
     $(function(){
         var offset = 0;//偏移量
         var limit = 10;//每页加载增加的数量
-        userList(offset);//执行函数首页数据
+        var i = 0;
+        userList(offset,i);//执行函数首页数据
         $(window).scroll(function () {
-            // console.log(123) 
             var winHei = $(window).height();//浏览器可视窗口的高度
             var winTop = $(window).scrollTop();//浏览器可视窗口顶端距离网页顶端的高度（垂直偏移）
             var docHei = $(document).height();//整个网页的文档高度
             //当网页滚动条拉到最低端时
             if (docHei ==  winHei + winTop) {
-                console.log(123)  
+                i += 10;
                 if (flag === false){
                     flag =true;//开关
                     setTimeout(function () {
@@ -217,7 +205,7 @@ $(document).ready(function() {
                             //偏移总量>列表总数时不加载数据
                             $('.top').html('全部加载完成～');
                         } else {
-                            userList(offset);//执行函数首页数据
+                            userList(offset,i);//执行函数首页数据
                         }
                     }, 1000); 
                 }
