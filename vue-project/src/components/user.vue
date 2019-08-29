@@ -1,14 +1,14 @@
 <template>
     <div class="list" :key="indexs">
-        <div class="user">
+        <div class="user" @click="see($event)">
             <div class="headpor">
                 <router-link :to="userInfor + items.id">
                     <img :src="items.gender == 'boy' ? imgRoute1 : imgRoute2">
                 </router-link>
             </div>
             <div class="ticket">
-                <p>{{items.vote}}票</p>
-                <div class="but">{{one}}</div>
+                <p class="animated" v-bind:class="{tada:style1}">{{ticket}}票</p>
+                <div class="but" :id="items.id">{{one}}</div>
             </div>
             <div class="name">
                 <router-link :to="userInfor + items.id">
@@ -23,6 +23,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     props:['items','indexs'],//定义属性
     data:function() {
@@ -33,14 +34,46 @@ export default {
             imgRoute1:require("../assets/boy.png"),
             imgRoute2:require("../assets/girl.png"),
             userInfor:"/detail/:id",
-            asd:false
+            asd:false,
+            voteId:"",
+            userId:"",
+            ticket:"",
+            style1:false,
+            // style2:"tada",
         }
+    },
+    //created 实例创建完成后被立即调用
+    created:function() {
+        this.ticket = this.items.vote
     },
     methods: {
         see($event) {
-            // console.log($event.target)
-            // console.log($event.target.id)
+            if($event.target.className == "but") {
+                if(JSON.parse(localStorage.getItem("data"))) {
+                    this.userId = JSON.parse(localStorage.getItem("data")).id;
+                    axios({
+                        method: "GET",
+                        url: "/vote/index/poll?id=" + $event.target.id + "&voterId=" + this.userId
+                    }).then(res => {
+                        if (res.data.errno === 0) {
+                                this.ticket += 1;
+                                this.style1 = true;
+                            } else {
+                                alert(res.data.msg);
+                            }
+                    })
+                } else {
+                    this.$emit("notLogin")
+                }
+                
+            }
         }
+    //     - 首页投票请求
+	// ```
+	// method: GET
+	// url: /vote/index/poll?id={被投票者id}&voterId={投票者id}
+	// 返回数据：errno为0，数据正确		
+	// ```
     },
     //vue实例挂载完成
 	mounted() {

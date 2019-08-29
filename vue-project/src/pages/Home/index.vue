@@ -1,8 +1,8 @@
 <template>
     <div>
         <headTemplate @logonEvents="loginDisplay" :mys="my" :hrefss="hrefs"/><!-- 头部组件 -->
-        <userList v-for="(item,index) in list" :key="index" :items="item" :indexs="index"/><!-- 用户列表 -->
-        <div class="top">加载更多...</div>
+        <userList v-for="(item,index) in list" :key="index" :items="item" :indexs="index" @notLogin="notLogin2"/><!-- 用户列表 -->
+        <div class="top">{{top}}</div>
 
         <div class="deng" v-if="hide" @click="loginHide"></div>
         <div class="zxs" v-if="hide">
@@ -47,6 +47,10 @@ export default {
             my:"我要报名",
             hrefs:"/register",
             detailId:"",
+            limit:10,
+            flag:true,
+            top:"加载更多...",
+            length:null,
         }
     },
     //created 实例创建完成后被立即调用
@@ -78,17 +82,21 @@ export default {
                 return;
             }
         },
+    mounted(){
+            window.addEventListener('scroll',this.handleScroll);// 监听（绑定）滚轮滚动事件
+        },
     methods:{
         load(){
             // 主页列表请求
             axios({
                 method: "GET",
-	            url: "/vote/index/data?limit=20&offset=0"
+	            url: "/vote/index/data?limit="+ this.limit +"&offset=0"
             }).then(res => {
                 if(res.data.errno == 0) {
                     this.list = res.data.data.objects;
                 }
             });
+            this.flag = false;
         },
         // 登入显示页/隐藏
         loginDisplay() {
@@ -133,8 +141,44 @@ export default {
             window.localStorage.clear();// 清除本地存储的数据
             location.href = '/#/';
         },
-        getUesr() {
-            
+        // 点击投票没有登录
+        notLogin2() {
+            this.hide = true;
+            this.hide2 = false;
+            this.hide3 = true;
+        },
+        // 滚动事件,数据加载
+        handleScroll() {
+            let clientHeight = document.body.clientHeight;// 网页可见区域高
+            let scrollObj = window.screen.height; // 可视窗口高度
+            let scrollTop = document.documentElement.scrollTop //滚动条距离最顶端的距离
+             //当网页滚动条拉到最底端时
+            if(scrollTop + scrollObj === clientHeight){
+                 if(this.flag == false) {
+                     this.flag = true;
+                    //  箭头函数的运用，this会指向外层
+                    //  if(this.limit > this.list.length) {
+                    //      setTimeout(() => this.top = "全部加载完成～",1000);
+                    //      return;
+                    //  } else {
+                    //     this.limit += 10;
+                    //     setTimeout(() => this.load(),1000);
+                    //  }
+                    // 方法2
+                    var that = this;//保存当前实例的this
+                    if(this.limit > this.list.length) {
+                        setTimeout(function() {
+                            that.top = "全部加载完成～"
+                        },1000);
+                        return;
+                    } else {
+                        this.limit += 10;
+                        setTimeout(function() {
+                            that.load()
+                        },1000);
+                    }
+                 }
+            }  
         }
     }
 }
