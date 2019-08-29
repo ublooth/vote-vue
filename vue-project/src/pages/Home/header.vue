@@ -11,7 +11,7 @@
             </div>
             <form class="please">
                 <input class="text" type="text" placeholder="请输入用户名称或编号" v-model="content">
-                <router-link :to="tocontent + content" class="button">搜索</router-link>
+                <router-link :to="`/search/${content}`" class="button">搜索</router-link>
             </form>
         </div>
     </div>

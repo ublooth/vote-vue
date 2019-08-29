@@ -19,10 +19,10 @@ export default {
     mounted() {
         // console.log(this.$route.params.id)
         // console.log(this.$route.params.id.split('id'))
-        // console.log(this.$route.params.id.substring(3,))
+        console.log(this.$route.params)
         axios({
             method: "GET",
-            url: "/vote/index/search?content=" + this.$route.params.id.substring(3,)
+            url: "/vote/index/search?content=" + this.$route.params.id
         }).then(res => {
             // console.log(res)
             // console.log(res.data.data.length)
