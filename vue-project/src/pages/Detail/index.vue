@@ -66,7 +66,8 @@ export default {
 	},
 	//vue实例挂载完成
 	mounted() {
-		this.detailId = this.$route.params.id.match(/\d+/g)[0];
+        // console.log(this.$route.params.id)
+		this.detailId = this.$route.params.id;
 		axios({
 			method: "GET",
 			url: "/vote/all/detail/data?id=" + this.detailId
@@ -77,11 +78,6 @@ export default {
 			}
 		})
 	},
-	//created 实例创建完成后被立即调用
-    created:function() {
-		// console.log(this.detailId)
-	}
-
 }
 </script>
 

@@ -1,35 +1,59 @@
 <template>
     <div>
-        <userList v-for="(itemb,indexb) in lists" :key="indexb" :items="itemb" :indexs="indexb"/><!-- 用户列表 -->
+        <userList v-for="(itemb,indexb) in lists" :key="indexb" :items="itemb" :indexs="indexb" @notLogin="notLogin2" @logonEvents="loginDisplay"/><!-- 用户列表 -->
+        <signIn :hide1="signInHide" :hide2="signInHide2" :hide3="signInHide3" @loginHide="loginHide2" @success="success2"/><!--  登入组件 -->
     </div>
 </template>
 <script>
 import userList from '../../components/user.vue';
+import signIn from '../../components/signIn.vue';
 import axios from 'axios';
 export default {
     components: {
-        userList
+        userList,
+        signIn
 	},
     data:function() {
         return {
             lists:"",
             content:"",
+            signInHide:false,
+            signInHide2:false,
+            signInHide3:true,
         }
     },
     mounted() {
         // console.log(this.$route.params.id)
-        // console.log(this.$route.params.id.split('id'))
-        // console.log(this.$route.params.id.substring(3,))
         axios({
             method: "GET",
-            url: "/vote/index/search?content=" + this.$route.params.id.substring(3,)
+            url: "/vote/index/search?content=" + this.$route.params.id
         }).then(res => {
-            // console.log(res)
-            // console.log(res.data.data.length)
             if(res.data.errno === 0 && res.data.data.length ===1) {
                 this.lists = res.data.data;
             }
         })
+    },
+    methods: {
+        // 点击投票没有登录
+        notLogin2() {
+            this.signInHide = true;
+            this.signInHide3 = true;
+        },
+        // 点击图片信息查看详情没有登录
+        loginDisplay() {
+            this.signInHide = true;
+            this.signInHide3 = true;
+        },
+        // 隐藏登录页面
+        loginHide2() {
+            this.signInHide = false;
+            this.signInHide3 = false;
+        },
+        // 用户登录成功
+        success2(res) {
+            this.signInHide = false;
+            this.signInHide3 = false;
+        },
     }
 }
 </script>
