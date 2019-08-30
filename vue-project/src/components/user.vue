@@ -2,21 +2,21 @@
     <div class="list" :key="indexs">
         <div class="user" @click="see($event)">
             <div class="headpor">
-                <router-link :to="userInfor + items.id">
+                <a href="javavsript:" @click="jascr">
                     <img :src="items.gender == 'boy' ? imgRoute1 : imgRoute2">
-                </router-link>
+                </a>
             </div>
             <div class="ticket">
                 <p class="animated" v-bind:class="{tada:style1}">{{ticket}}票</p>
-                <div class="but" :id="items.id">{{one}}</div>
+                <div class="but" :id="items.id">投TA一票</div>
             </div>
             <div class="name">
-                <router-link :to="userInfor + items.id">
+                <a href="javavsript:" @click="jascr">
                     <span class="fef">{{items.username}}</span>
                     <span class="thaa" style="margin: 0 6px;">|</span>
                     <span class="thaa">编号#{{items.id}}</span>
                     <p>{{items.descrption}}</p>
-                </router-link>
+                </a>
             </div>
         </div>
         <div v-if="asd">没有您查询的信息</div>
@@ -29,17 +29,15 @@ export default {
     data:function() {
         return {
             href:"",
-            one:"投TA一票",
             // 图片src属性通过判断语句引入需要require方法
             imgRoute1:require("../assets/boy.png"),
             imgRoute2:require("../assets/girl.png"),
-            userInfor:"/detail/:id",
+            userInfor:"/detail/",
             asd:false,
             voteId:"",
             userId:"",
             ticket:"",
             style1:false,
-            // style2:"tada",
         }
     },
     //created 实例创建完成后被立即调用
@@ -67,18 +65,18 @@ export default {
                 }
                 
             }
+        },
+        loginDisplay() {
+            this.$emit('logonEvents')
+        },
+        jascr() {
+            if(JSON.parse(localStorage.getItem("data"))) {
+                location.href = 'http://localhost:8081/#'+ this.userInfor + this.items.id;
+            } else {
+                this.loginDisplay()
+            }
         }
-    //     - 首页投票请求
-	// ```
-	// method: GET
-	// url: /vote/index/poll?id={被投票者id}&voterId={投票者id}
-	// 返回数据：errno为0，数据正确		
-	// ```
     },
-    //vue实例挂载完成
-	mounted() {
-        
-    }
 }
 </script>
 <style>

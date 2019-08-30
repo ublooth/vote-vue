@@ -9,23 +9,21 @@
         </div>
         <div class="inrorm">
             <form action="" class="myform">
-                <p>{{username}}</p>
+                <p>用户名：</p>
                 <input type="text" placeholder="请填写用户名" v-model="data.username">
-                <p>{{pwd}}</p>
+                <p>密码：</p>
                 <input type="password" placeholder="数字或字母不超过10个长度" maxlength="10"  v-model="data.password">
-                <p>{{pwd2}}</p>
+                <p>确认密码：</p>
                 <input type="password" placeholder="数字或字母不超过10个长度" maxlength="10" v-model="password2">
-                <p>{{phone}}</p>
+                <p>手机号码：</p>
                 <input type="text" placeholder="请填写正确格式的手机号码" maxlength="11" v-model="data.mobile">
-                <p>{{describe}}</p>
+                <p>自我描述：</p>
                 <input type="text" placeholder="请填写自我描述（20字以内）" maxlength="20" v-model="data.descrption">
-                <p>{{sex}}</p>
+                <p>性别：</p>
 
-                <input class="gender" type="radio"  id="boy" value="boy" v-model="data.gender"><label for="boy">{{
-                    boy}}</label>
+                <input class="gender" type="radio"  id="boy" value="boy" v-model="data.gender"><label for="boy">男</label>
                 <br>
-                <input class="gender" type="radio" id="girl" value="girl" v-model="data.gender"><label for="girl">{{
-                    girl}}</label>
+                <input class="gender" type="radio" id="girl" value="girl" v-model="data.gender"><label for="girl">女</label>
                 <br>
                 <input class="sub" type="button" value="提交" @click="sub">
             </form>
@@ -37,14 +35,6 @@ import axios from 'axios';
 export default {
     data:function() {
         return {
-            username:"用户名：",
-            pwd:"密码：",
-            pwd2:"确认密码：",
-            phone:"手机号码：",
-            describe:"自我描述：",
-            sex:"性别：",
-            boy:"男",
-            girl:"女",
             password2:'',
             data:  {
 			       username: '',
