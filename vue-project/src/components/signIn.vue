@@ -20,11 +20,15 @@
 </template>
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex'
 export default {
     props:['hide1','hide2','hide3','username2'],
+    computed: mapState({
+        userInfo: state => state.login.userInfo
+    }),
     data:function() {
         return {
-            signData: {password:'',id:''},
+            signData: {password:'',id:''}
         }
     },
     methods:{
@@ -51,7 +55,13 @@ export default {
         },
         signOut2() {
             this.$emit("signOut")
+
+           
         }
+    },
+    mounted() {
+        console.log('userInfo', this.userInfo)
+        console.log('userInfo222', this.$store.state.login.userInfo)
     }
 }
 </script>

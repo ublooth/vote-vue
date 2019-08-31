@@ -24,6 +24,7 @@
 </template>
 <script>
 import axios from 'axios';
+
 export default {
     props:['items','indexs'],//定义属性
     data:function() {
@@ -43,6 +44,7 @@ export default {
     //created 实例创建完成后被立即调用
     created:function() {
         this.ticket = this.items.vote
+        console.log('this.111', this.$store.state.login.userInfo)
     },
     methods: {
         see($event) {
@@ -80,10 +82,6 @@ export default {
 }
 </script>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-}
 img {
     width: 100%;
     height: auto;
