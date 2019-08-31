@@ -1,13 +1,22 @@
 <template>
   <div id="app">
+    <siginSw />
     <!-- <img src="./assets/logo.png"> -->
     <router-view/>
   </div>
 </template>
 
+
 <script>
+import siginSw from './components/signSw'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    siginSw
+  },
+  created() {
+    this.$store.commit('judgeLogin')
+  }
 }
 </script>
 

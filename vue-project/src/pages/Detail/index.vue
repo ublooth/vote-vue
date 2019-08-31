@@ -1,5 +1,9 @@
 <template>
   <div>
+      <div style="heigth: 20px; font-size: 30px">
+			{{ $store.state.count }}
+			
+		</div>
 	  <div class="head3">
         <div class="headImg3">
             <div class="title3">
