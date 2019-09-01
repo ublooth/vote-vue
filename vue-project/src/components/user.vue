@@ -42,7 +42,7 @@ export default {
     },
     //created 实例创建完成后被立即调用
     created:function() {
-        this.ticket = this.items.vote
+        this.ticket = this.items.vote;//获取票数
     },
     methods: {
         see($event) {
@@ -62,48 +62,20 @@ export default {
                     })
                 } else {
                     this.$emit("notLogin")
-                }
-                
+                }   
             }
-        },
-        loginDisplay() {
-            this.$emit('logonEvents')
         },
         jascr() {
             if(JSON.parse(localStorage.getItem("data"))) {
                 location.href = 'http://localhost:8081/#'+ this.userInfor + this.items.id;
             } else {
-                this.loginDisplay()
+                this.$emit('logonEvents')
             }
         }
     },
 }
 </script>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-}
-img {
-    width: 100%;
-    height: auto;
-}
-a {
-    color: #333;
-    text-decoration: none;/*清除下划线*/
-    /* display: inline-block; */
-}
-.f-s14 {
-    font-size: 14px;
-}
-.jiacu {
-    font-weight: bolder;
-}
-body {
-    /* font-size: 0; */
-    background: #effbff;
-}
-
 /* 用户列表 */
 .list {
     width: 100%;

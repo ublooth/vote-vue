@@ -83,35 +83,7 @@ export default {
 
 <style >
 /* 默认样式 */
-* {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-ul {
-    list-style: none;
-}
-a {
-    color: #333;
-    text-decoration: none;/*清除下划线*/
-    /* display: inline-block; */
-}
 
-.f-s {
-    font-size: 12px;
-}
-.f-s14 {
-    font-size: 14px;
-}
-
-img {
-    width: 100%;
-    height: auto;
-}
-body {
-    font-size: 0;
-    background: #effbff;
-}
 /* 头部 */
 .headImg3 {
     width: 100%;    

@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <div class="deng" v-if="hide1" @click="loginHide2"></div>
-        <div class="zxs" v-if="hide1">
-            <form class="den" id="myform" v-if="hide3">
+    <div v-if="signInHide">
+        <div class="deng"  @click="loginHide2"></div>
+        <div class="zxs" >
+            <form class="den" id="myform" v-if="loginFormHide">
                 <p>请输入用户信息进行验证</p>
                 <input id="num" type="text" placeholder="请填写用户编号" v-model="signData.id"><br>
                 <input id="pwd" type="password" placeholder="请填写用户密码" v-model="signData.password"><br>
@@ -10,9 +10,9 @@
                 <span class="f-s">没有用户名和编号？</span>  
                 <a href="#/register">请先进行报名</a>
             </form>  
-            <div class="den" v-if="hide2">
+            <div class="den" v-if="userNameHide">
                 <div style="font-size:30px;color:red;padding:10px 0;">Welcome</div>
-                <div id="kaka" style="font-size:30px;color:red;margin: 10px 0;">{{username2}}</div>
+                <div id="kaka" style="font-size:30px;color:red;margin: 10px 0;">{{username}}</div>
                 <div id="signOut" @click="signOut2">退出登入</div>
             </div>
         </div>
@@ -20,11 +20,34 @@
 </template>
 <script>
 import axios from 'axios';
+import share from '../pages/shareJS/share';//传函数方法过来
 export default {
-    props:['hide1','hide2','hide3','username2'],
+    props:['signInHide'],
     data:function() {
         return {
             signData: {password:'',id:''},
+            loginFormHide:true,
+            userNameHide:false,
+            username:'',
+        }
+    },
+    //created 实例创建完成后被立即调用
+	created:function() {
+        if(JSON.parse(localStorage.getItem("data"))) {
+            axios({
+                method:"POST",
+                url:"/vote/index/info",
+                data: {
+                    password:JSON.parse(localStorage.getItem("data")).password,
+                    id:JSON.parse(localStorage.getItem("data")).id,
+                }
+            }).then(res => {
+                if(res.data.errno == 0) {
+                    this.username = res.data.user.username;
+                    this.loginFormHide = false;
+                    this.userNameHide = true;
+                }
+            });
         }
     },
     methods:{
@@ -32,6 +55,7 @@ export default {
             this.$emit("loginHide");
         },
         signIn() {
+            var that = this;
             axios({
                 method:"POST",
                 url:"/vote/index/info",
@@ -44,12 +68,17 @@ export default {
                     // 本地存储数据
                     localStorage.setItem("data",JSON.stringify({id:this.signData.id,password:this.signData.password,username:res.data.user.username}));
                     alert("登录成功");
-                    console.log('111',res)
+                    // console.log('111',res)
+                    that.loginFormHide = false;
+                    that.userNameHide = true;
+                    that.username = res.data.user.username;
                     this.$emit("success",res)
                 }
             });
         },
         signOut2() {
+            this.loginFormHide = true;
+            this.userNameHide = false;
             this.$emit("signOut")
         }
     }

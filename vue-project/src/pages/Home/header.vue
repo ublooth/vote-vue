@@ -57,29 +57,7 @@ export default {
 }
 </script>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-}
-img {
-    width: 100%;
-    height: auto;
-}
-a {
-    color: #333;
-    text-decoration: none;/*清除下划线*/
-    /* display: inline-block; */
-}
-.f-s14 {
-    font-size: 14px;
-}
-.jiacu {
-    font-weight: bolder;
-}
-body {
-    /* font-size: 0; */
-    background: #effbff;
-}
+
 .head {
     width: 100%;
     height: 333px;
