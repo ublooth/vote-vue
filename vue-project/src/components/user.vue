@@ -2,7 +2,7 @@
     <div class="list" :key="indexs">
         <div class="user" @click="see($event)">
             <div class="headpor">
-                <a href="javavsript:" @click="jascr">
+                <a href="javascript:void(0);" @click="jascr">
                     <img :src="items.gender == 'boy' ? imgRoute1 : imgRoute2">
                 </a>
             </div>
@@ -11,7 +11,7 @@
                 <div class="but" :id="items.id">投TA一票</div>
             </div>
             <div class="name">
-                <a href="javavsript:" @click="jascr">
+                <a href="javascript:void(0);" @click="jascr">
                     <span class="fef">{{items.username}}</span>
                     <span class="thaa" style="margin: 0 6px;">|</span>
                     <span class="thaa">编号#{{items.id}}</span>
@@ -25,7 +25,7 @@
 <script>
 import axios from 'axios';
 export default {
-    props:['items','indexs'],//定义属性
+    props:['items','indexs','asd'],//定义属性
     data:function() {
         return {
             href:"",
@@ -33,7 +33,7 @@ export default {
             imgRoute1:require("../assets/boy.png"),
             imgRoute2:require("../assets/girl.png"),
             userInfor:"/detail/",
-            asd:false,
+            // asd:false,
             voteId:"",
             userId:"",
             ticket:"",
@@ -43,12 +43,15 @@ export default {
     //created 实例创建完成后被立即调用
     created:function() {
         this.ticket = this.items.vote;//获取票数
+        // if(this.items == '') {
+        //     this.asd = true
+        // }
     },
     methods: {
         see($event) {
             if($event.target.className == "but") {
-                if(JSON.parse(localStorage.getItem("data"))) {
-                    this.userId = JSON.parse(localStorage.getItem("data")).id;
+                if(this.login.login()) {
+                    this.userId = this.login.login().id;
                     axios({
                         method: "GET",
                         url: "/vote/index/poll?id=" + $event.target.id + "&voterId=" + this.userId
@@ -61,15 +64,17 @@ export default {
                             }
                     })
                 } else {
-                    this.$emit("notLogin")
+                    // this.$emit("notLogin")
+                    this.$store.commit('openPopup') // 登入页显示
                 }   
             }
         },
         jascr() {
-            if(JSON.parse(localStorage.getItem("data"))) {
+            if(this.login.login()) {
                 location.href = 'http://localhost:8081/#'+ this.userInfor + this.items.id;
             } else {
-                this.$emit('logonEvents')
+                // this.$emit('logonEvents')
+                this.$store.commit('openPopup') // 登入页显示
             }
         }
     },

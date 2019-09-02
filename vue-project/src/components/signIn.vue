@@ -1,6 +1,7 @@
 <template>
-    <div v-if="signInHide">
-        <div class="deng"  @click="loginHide2"></div>
+    <!-- <div v-if="$store.state.login.show"> -->
+    <div v-if="show">
+        <div class="deng"  @click="loginHide"></div>
         <div class="zxs" >
             <form class="den" id="myform" v-if="loginFormHide">
                 <p>请输入用户信息进行验证</p>
@@ -20,9 +21,8 @@
 </template>
 <script>
 import axios from 'axios';
-import share from '../pages/shareJS/share';//传函数方法过来
+import { mapState } from 'vuex' // 在使用mapState之前,要导入这个辅助函数.
 export default {
-    props:['signInHide'],
     data:function() {
         return {
             signData: {password:'',id:''},
@@ -31,15 +31,19 @@ export default {
             username:'',
         }
     },
+    computed: mapState({
+        show: state => state.login.show,
+        // 把$store.state.login.show简写为：show
+    }),
     //created 实例创建完成后被立即调用
 	created:function() {
-        if(JSON.parse(localStorage.getItem("data"))) {
+        if(this.login.login()) {
             axios({
                 method:"POST",
                 url:"/vote/index/info",
                 data: {
-                    password:JSON.parse(localStorage.getItem("data")).password,
-                    id:JSON.parse(localStorage.getItem("data")).id,
+                    password:this.login.login().password,
+                    id:this.login.login().id,
                 }
             }).then(res => {
                 if(res.data.errno == 0) {
@@ -51,8 +55,8 @@ export default {
         }
     },
     methods:{
-        loginHide2() {
-            this.$emit("loginHide");
+        loginHide() { // 登录弹窗隐藏
+            this.$store.commit('close')
         },
         signIn() {
             var that = this;
@@ -66,13 +70,21 @@ export default {
             }).then(res => {
                 if(res.data.errno == 0) {
                     // 本地存储数据
-                    localStorage.setItem("data",JSON.stringify({id:this.signData.id,password:this.signData.password,username:res.data.user.username}));
+                    localStorage.setItem("data",JSON.stringify({
+                        id:this.signData.id,
+                        password:this.signData.password,
+                        username:res.data.user.username
+                    }));
                     alert("登录成功");
                     // console.log('111',res)
                     that.loginFormHide = false;
                     that.userNameHide = true;
+                    this.$store.commit('close');// 登录弹窗隐藏
+                    that.signData.password = ''; // 清空表单信息
+                    that.signData.id = ''; // 清空表单信息
                     that.username = res.data.user.username;
                     this.$emit("success",res)
+                    this.login.login();//调用公共方法
                 }
             });
         },

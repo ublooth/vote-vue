@@ -1,5 +1,10 @@
 <template>
   <div>
+      <!-- <div style="font-size: 28px; z-index:1111 ">
+		{{ $store.state.count }}
+        <button @click="add()">加加</button>
+			<button @click="dec">减减</button>
+	    </div> -->
 	  <div class="head3">
         <div class="headImg3">
             <div class="title3">
@@ -77,7 +82,20 @@ export default {
 				this.voteUser = res.data.data.vfriend;
 			}
 		})
-	},
+    },
+    methods: {
+        // ...mapMutations([
+        //     'increment'
+        // ]),
+        // add() {
+        //     // console.log('$store1',this.$store.commit)
+        //     // console.log('$store1',123123123)
+        //     this.$store.commit('increment')
+        // },
+        // dec() {
+        //     this.$store.commit('decrement')
+        // },
+    }
 }
 </script>
 

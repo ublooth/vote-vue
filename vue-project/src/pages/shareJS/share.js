@@ -1,8 +1,12 @@
-function shareGetItem (key) {
-  return JSON.parse(localStorage.getItem(key))
-}
-let login = shareGetItem('data')
+// function shareGetItem (key) {
+//   return JSON.parse(localStorage.getItem(key))
+// }
+// function login () {
+//   return shareGetItem('data')
+// }
+// login()
 export default {
-  shareGetItem,
-  login
+  login: function () {
+    return JSON.parse(localStorage.getItem('data'))
+  }
 }

@@ -19,6 +19,7 @@
 </template>
 <script>
 import Axios from 'axios';
+import login from '../shareJS/share';//传函数方法过来
 export default {
     props:["mys","hrefss"],
     data:function() {
@@ -28,20 +29,20 @@ export default {
         }
     },
     methods:{
-        // 登入页显示,触发事件
-        loginDisplay() {
-            this.$emit('logonEvents')
+        loginDisplay() { // 登入页显示
+            // this.$emit('logonEvents')
+            this.$store.commit('openPopup')
         },
         // 搜索点击事件
         // search() {
-        //     if(JSON.parse(localStorage.getItem("data"))) {
+        //     if(this.login.login()) {
         //         location.href = 'http://localhost:8081/#'+ this.tocontent + this.content;
         //     } else {
         //         this.loginDisplay()
         //     }
         // },
         hdgz() {
-            if(JSON.parse(localStorage.getItem("data"))) {
+            if(this.login.login()) {
                 // location.href = 'http://localhost:8081/#'+ ;
                 // alert(`    
                 //                   一个人最多投五票
