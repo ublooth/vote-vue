@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="list" :key="indexs">
         <div class="user" @click="see($event)">
             <div class="headpor">
@@ -21,6 +22,8 @@
         </div>
         <div v-if="asd">没有您查询的信息</div>
     </div>
+    
+</div>
 </template>
 <script>
 import axios from 'axios';
@@ -33,7 +36,6 @@ export default {
             imgRoute1:require("../assets/boy.png"),
             imgRoute2:require("../assets/girl.png"),
             userInfor:"/detail/",
-            // asd:false,
             voteId:"",
             userId:"",
             ticket:"",
@@ -43,9 +45,6 @@ export default {
     //created 实例创建完成后被立即调用
     created:function() {
         this.ticket = this.items.vote;//获取票数
-        // if(this.items == '') {
-        //     this.asd = true
-        // }
     },
     methods: {
         see($event) {
@@ -64,16 +63,14 @@ export default {
                             }
                     })
                 } else {
-                    // this.$emit("notLogin")
                     this.$store.commit('openPopup') // 登入页显示
                 }   
             }
         },
         jascr() {
             if(this.login.login()) {
-                location.href = 'http://localhost:8081/#'+ this.userInfor + this.items.id;
+                location.href = '/#'+ this.userInfor + this.items.id;
             } else {
-                // this.$emit('logonEvents')
                 this.$store.commit('openPopup') // 登入页显示
             }
         }

@@ -1,22 +1,9 @@
 <template>
 	<div>
-		<!-- <div style="font-size: 28px; z-index:1111 ">
-			{{ $store.state.count }}
-			<button @click="add()">加加</button>
-			<button @click="dec">减减</button>
-		</div> -->
-		<!-- <headTemplate @logonEvents="loginDisplay" :mys="my" :hrefss="hrefs"/> --><!-- 头部组件 -->
-		<headTemplate :mys="my" :hrefss="hrefs"/><!-- 头部组件 -->
-		<!-- <userList v-for="(item,index) in list" :key="index" :items="item" :indexs="index" @notLogin="notLogin2" @logonEvents="loginDisplay"/> --><!-- 用户列表 -->
+		<headTemplate/><!-- 头部组件 -->
 		<userList v-for="(item,index) in list" :key="index" :items="item" :indexs="index"/><!-- 用户列表 -->
 		<div class="top">{{top}}</div>
-		<!-- <signIn
-		@loginHide="loginHide"
-		@signOut="signOut"
-		@success="userSuccess"/> --><!-- 登入组件 -->
-		<signIn
-		@signOut="signOut"
-		@success="userSuccess"/><!-- 登入组件 -->
+		<signIn/><!-- 登入组件 -->
 	</div>
 </template>
 
@@ -37,23 +24,22 @@ export default {
 		return {
 			username:"",
 			list:null, 
-			// hide:false,
 			signData: {password:'',id:''},
-			my:"我要报名",
 			hrefs:"/register",
 			detailId:"",
 			limit:10,
 			flag:true,
 			top:"加载更多...",
 			length:null,
-			signInHide:false
+			signInHide:false,
+			// aaaa:this.$store.state.headname,//测试
 		}
 	},
 	//created 实例创建完成后被立即调用
 	created:function() {
+		// console.log('aaa',this.aaaa)//测试
 		this.load();
-		if(this.login.login()) {
-			// this.login.login():导入相同函数方法
+		if(this.login.login()) { // this.login.login():导入相同函数方法
 			this.signData.password = this.login.login().password;
 			this.signData.id = this.login.login().id;
 			axios({
@@ -65,11 +51,7 @@ export default {
 				}
 			}).then(res => {
 				if(res.data.errno == 0) {
-					this.my = "个人主页";
-					this.detailId = res.data.id;
-					this.hrefs = "/detail/" + this.detailId;
-					this.username = res.data.user.username;
-					this.signData = {password:'',id:''};
+					this.$store.commit('loginSuccess')
 				}
 			});
 		} else {
@@ -101,34 +83,6 @@ methods:{
 				}
 		});
 		this.flag = false;
-	},
-	// // 登入显示页/隐藏
-	// loginDisplay() {
-	// 	this.hide = true;
-	// },
-	// loginHide() {
-	// 	this.hide = false;
-	// },
-	// 用户登录成功
-	userSuccess(res) {
-		console.log(res)
-		this.my = "个人主页";
-		this.$store.commit('close');// 登录弹窗隐藏
-		this.loginFormHides = false;
-		this.userNameHides = true;
-		this.detailId = res.data.id;
-		this.hrefs = "/detail/" + this.detailId;
-		this.username = res.data.user.username;
-		this.signData = {password:'',id:''};
-	},
-	// 退出登录
-	signOut() {
-		this.$store.commit('close');// 登录弹窗隐藏
-		this.my = "我要报名";
-		this.hrefs = "/register";
-		this.detailId = "";
-		window.localStorage.clear();// 清除本地存储的数据
-		location.href = '/#/';
 	},
 	// 滚动事件,数据加载
 	handleScroll() {

@@ -3,7 +3,7 @@
     <div v-if="show">
         <div class="deng"  @click="loginHide"></div>
         <div class="zxs" >
-            <form class="den" id="myform" v-if="loginFormHide">
+            <form class="den" id="myform" v-if=" $store.state.loginFormHide ">
                 <p>请输入用户信息进行验证</p>
                 <input id="num" type="text" placeholder="请填写用户编号" v-model="signData.id"><br>
                 <input id="pwd" type="password" placeholder="请填写用户密码" v-model="signData.password"><br>
@@ -11,10 +11,10 @@
                 <span class="f-s">没有用户名和编号？</span>  
                 <a href="#/register">请先进行报名</a>
             </form>  
-            <div class="den" v-if="userNameHide">
+            <div class="den" v-if="$store.state.userNameHide">
                 <div style="font-size:30px;color:red;padding:10px 0;">Welcome</div>
-                <div id="kaka" style="font-size:30px;color:red;margin: 10px 0;">{{username}}</div>
-                <div id="signOut" @click="signOut2">退出登入</div>
+                <div id="kaka" style="font-size:30px;color:red;margin: 10px 0;">{{ $store.state.username }}</div>
+                <div id="signOut" @click="signOut">退出登入</div>
             </div>
         </div>
     </div>
@@ -26,9 +26,6 @@ export default {
     data:function() {
         return {
             signData: {password:'',id:''},
-            loginFormHide:true,
-            userNameHide:false,
-            username:'',
         }
     },
     computed: mapState({
@@ -47,9 +44,7 @@ export default {
                 }
             }).then(res => {
                 if(res.data.errno == 0) {
-                    this.username = res.data.user.username;
-                    this.loginFormHide = false;
-                    this.userNameHide = true;
+                    this.$store.commit('loginSuccess');// 登录成功
                 }
             });
         }
@@ -76,22 +71,19 @@ export default {
                         username:res.data.user.username
                     }));
                     alert("登录成功");
-                    // console.log('111',res)
-                    that.loginFormHide = false;
-                    that.userNameHide = true;
                     this.$store.commit('close');// 登录弹窗隐藏
+                    this.$store.commit('loginSuccess');// 登录成功
                     that.signData.password = ''; // 清空表单信息
                     that.signData.id = ''; // 清空表单信息
-                    that.username = res.data.user.username;
-                    this.$emit("success",res)
                     this.login.login();//调用公共方法
+                } else {
+                     alert(res.data.msg);
                 }
             });
         },
-        signOut2() {
-            this.loginFormHide = true;
-            this.userNameHide = false;
-            this.$emit("signOut")
+        signOut() {
+            this.$store.commit('close');// 登录弹窗隐藏
+            this.$store.commit('signOut');// 退出登录
         }
     }
 }

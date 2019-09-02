@@ -27,6 +27,7 @@ export default {
       // hide: false
     };
   },
+  //el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子
   mounted() {
     console.log(this.$route.params);
     axios({

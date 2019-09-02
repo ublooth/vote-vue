@@ -6,7 +6,7 @@
             <div class="head-img">
                 <img src="../../assets/title.png" class="animated tada">
                 <div class="sign">
-                    <router-link id="my" :to="hrefss" v-text="mys"></router-link>
+                    <router-link id="my" :to="this.$store.state.hrefs">{{ $store.state.headname }}</router-link>
                 </div>
             </div>
             <form class="please">
@@ -21,26 +21,23 @@
 import Axios from 'axios';
 import login from '../shareJS/share';//传函数方法过来
 export default {
-    props:["mys","hrefss"],
+    props:["mys"],
     data:function() {
         return {
+            // lianjie:this.$store.state.hrefs,
             content:"",
             tocontent:"/search/",
         }
+    },
+    //created 实例创建完成后被立即调用
+	created:function() {
+        
     },
     methods:{
         loginDisplay() { // 登入页显示
             // this.$emit('logonEvents')
             this.$store.commit('openPopup')
         },
-        // 搜索点击事件
-        // search() {
-        //     if(this.login.login()) {
-        //         location.href = 'http://localhost:8081/#'+ this.tocontent + this.content;
-        //     } else {
-        //         this.loginDisplay()
-        //     }
-        // },
         hdgz() {
             if(this.login.login()) {
                 // location.href = 'http://localhost:8081/#'+ ;
