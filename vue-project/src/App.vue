@@ -3,16 +3,20 @@
     <siginSw />
     <!-- <img src="./assets/logo.png"> -->
     <router-view/>
+    <Nav />
   </div>
 </template>
 
 
 <script>
+import Nav from './components/Nav'
 import siginSw from './components/signSw'
+
 export default {
   name: 'App',
   components: {
-    siginSw
+    siginSw,
+    Nav
   },
   created() {
     this.$store.commit('judgeLogin')
