@@ -6,13 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     count: 0,
-    headname: '我要报名',
-    loginFormHide: true, // 登录表单显示
-    userNameHide: false, // 用户名窗口隐藏
-    username: '', // 用户名
-    hrefs: '/register', // 头部按钮链接
     login: {
-      show: false // 是否显示登录界面
+      show: false, // 是否显示登录界面
+      userInfo: false // 用户信息
     }
   },
   // mutations:改变数据方法的集合
@@ -29,23 +25,13 @@ export default new Vuex.Store({
     close (state) {
       state.login.show = false // 隐藏登录界面
     },
-    // 登录成功
-    loginSuccess (state) {
+    judgeLogin (state) {
       let data = login.login() // 导入函数方法
-      console.log('data', data)
-      state.username = data.username
-      state.loginFormHide = false
-      state.userNameHide = true
-      state.headname = '个人主页'
-      state.hrefs = '/detail/' + data.id
-    },
-    // 退出登录
-    signOut (state) {
-      state.hrefs = '/register'
-      state.headname = '我要报名'
-      state.loginFormHide = true
-      state.userNameHide = false
-      window.localStorage.clear()
+      if (data) {
+        state.login.userInfo = data
+      } else {
+        state.login.userInfo = false
+      }
     }
   }
 })

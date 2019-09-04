@@ -113,6 +113,7 @@ export default {
 .title3 {
     display: inline-block;
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     overflow: hidden;
     margin: 24px 10px 0 18px;
@@ -224,6 +225,7 @@ span3 {
 .headpor3 {
     display: inline-block;
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     overflow: hidden;
     margin: 10px;

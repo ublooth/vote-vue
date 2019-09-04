@@ -7,18 +7,18 @@
       :indexs="indexb"
     />
     <!-- 用户列表 -->
-    <signIn/>
+    <!-- <signIn/> -->
     <!--  登入组件 -->
   </div>
 </template>
 <script>
 import userList from "../../components/user.vue";
-import signIn from "../../components/signIn.vue";
+// import signIn from "../../components/signIn.vue";
 import axios from "axios";
 export default {
   components: {
     userList,
-    signIn
+    // signIn
   },
   data: function() {
     return {

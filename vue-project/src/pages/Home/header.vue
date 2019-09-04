@@ -6,7 +6,7 @@
             <div class="head-img">
                 <img src="../../assets/title.png" class="animated tada">
                 <div class="sign">
-                    <router-link id="my" :to="this.$store.state.hrefs">{{ $store.state.headname }}</router-link>
+                    <router-link id="my" :to="hrefs">{{ headname }}</router-link>
                 </div>
             </div>
             <form class="please">
@@ -20,23 +20,41 @@
 <script>
 import Axios from 'axios';
 import login from '../shareJS/share';//传函数方法过来
+import { mapState,mapMutations } from 'vuex';// 导入辅助函数.
 export default {
     props:["mys"],
     data:function() {
         return {
-            // lianjie:this.$store.state.hrefs,
-            content:"",
+            headname:'我要报名',
+            hrefs:'/register',
+            content:"", 
             tocontent:"/search/",
         }
     },
     //created 实例创建完成后被立即调用
 	created:function() {
-        
+        this.judgeLogin()
+		// console.log('113322',this.$store.state.login.userInfo)
+        // console.log('133442',this.userInfo)
+        if(this.userInfo) {
+            this.headname = '个人主页';
+            this.hrefs = '/detail/' + this.userInfo.id
+        } else {
+            return
+        }
     },
+    computed: mapState({
+        userInfo: state => state.login.userInfo,
+        // 把$store.state.login.show简写为：show
+    }),
     methods:{
+        ...mapMutations([
+            'judgeLogin',
+            'openPopup'
+		]),
         loginDisplay() { // 登入页显示
-            // this.$emit('logonEvents')
-            this.$store.commit('openPopup')
+            // this.$store.commit('openPopup')
+            this.openPopup()
         },
         hdgz() {
             if(this.login.login()) {
@@ -48,7 +66,8 @@ export default {
                 //                用户也可以将票投给自己`)
                 // 没有写活动规则页面
             } else {
-                this.loginDisplay()
+                // this.$store.commit('openPopup')
+                this.openPopup() // 登入页显示
             }
         }
     }
