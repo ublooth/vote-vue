@@ -2,7 +2,7 @@
     <div class="list" :key="indexs">
         <div class="user" @click="see($event)">
             <div class="headpor">
-                <a href="javavsript:" @click="jascr">
+                <a href="javascript:void(0);" @click="jascr">
                     <img :src="items.gender == 'boy' ? imgRoute1 : imgRoute2">
                 </a>
             </div>
@@ -11,7 +11,7 @@
                 <div class="but" :id="items.id">投TA一票</div>
             </div>
             <div class="name">
-                <a href="javavsript:" @click="jascr">
+                <a href="javascript:void(0);" @click="jascr">
                     <span class="fef">{{items.username}}</span>
                     <span class="thaa" style="margin: 0 6px;">|</span>
                     <span class="thaa">编号#{{items.id}}</span>
